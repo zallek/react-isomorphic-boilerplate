@@ -8,30 +8,29 @@ import DevTools from '../components/DevTools';
 window.$REDUX_DEVTOOL = false;
 
 const logger = createLogger({
-	level: 'info',
-	collapsed: true,
-	// predicate: (getState, action) => action.type !== AUTH_REMOVE_TOKEN
+  level: 'info',
+  collapsed: true,
+  // predicate: (getState, action) => action.type !== AUTH_REMOVE_TOKEN
 });
 
 const enhancer = compose(
-	applyMiddleware( promiseMiddleware, logger ),
-	DevTools.instrument() // comment this out if you don't need redux-devtools
-)
+  applyMiddleware(promiseMiddleware, logger),
+  DevTools.instrument() // comment this out if you don't need redux-devtools
+);
 
-export default function configureStore( initialState = undefined  ) {
+export default function configureStore(initialState = undefined) {
+  // 重要：如果有 server rendering，就直接用預先埋好的資料而不用重撈了，省一趟
+  const store = createStore(combinedReducers, initialState, enhancer);
 
-	// 重要：如果有 server rendering，就直接用預先埋好的資料而不用重撈了，省一趟
-	const store = createStore( combinedReducers, initialState, enhancer);
+  // module 是 webpack 包過一層時提供的，signature 如下：
+  // function(module, exports, __webpack_require__) {
+  if (module.hot) {
+  // Enable Webpack hot module replacement for reducers
+    module.hot.accept('../reducers', () => {
+      const nextRootReducer = require('../reducers');
+      store.replaceReducer(nextRootReducer);
+    });
+  }
 
-	// module 是 webpack 包過一層時提供的，signature 如下：
-	// function(module, exports, __webpack_require__) {
-	if (module.hot) {
-	// Enable Webpack hot module replacement for reducers
-	module.hot.accept('../reducers', () => {
-		const nextRootReducer = require('../reducers');
-		store.replaceReducer(nextRootReducer);
-	});
-	}
-
-	return store;
+  return store;
 }

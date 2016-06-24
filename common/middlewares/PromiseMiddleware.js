@@ -1,7 +1,5 @@
-export default function promiseMiddleware( objMethods ) {
-
+export default function promiseMiddleware(objMethods) {
   return (next) => (action) => {
-
     const { promise, types, ...rest } = action;
 
     // 假如傳來的 action 內沒有 promise 屬性，代表不需 async 處理，直接略過
