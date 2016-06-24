@@ -43,7 +43,7 @@ module.exports = {
 		  exclude: /node_modules/,
 		  include: __dirname,
 		  query: {
-		    presets: [ 'react-hmre', "es2015", "stage-0", "react" ],
+		    presets: [ 'react-hmre', "es2015", "stage-1", "react" ],
 		    plugins: [ "transform-decorators-legacy" ],
 		  }
 		  /*query: {
