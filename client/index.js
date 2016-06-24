@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { render } from 'react-dom';
 import Immutable from 'immutable';
-import { Router, Route, RouterContext, browserHistory } from 'react-router';
+import { Router, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import configureStore from '../common/utils/configureStore';
 import { ProductState, ProductRecord, CartState, convertMapToImmutable } from '../common/constants/Types';
@@ -14,7 +14,7 @@ if (window.$REDUX_STATE) {
 
   // begin marshalling data into Immutable types
   state.products = new ProductState({
-    $fetched: document.location.pathname == '/',
+    $fetched: document.location.pathname === '/',
     productsById: convertMapToImmutable(state.products.productsById, ProductRecord),
     total: state.products.total,
   });

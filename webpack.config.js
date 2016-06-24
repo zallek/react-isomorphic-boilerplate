@@ -42,20 +42,6 @@ module.exports = {
         loader: 'babel',
         exclude: /node_modules/,
         include: __dirname,
-        query: {
-          presets: ['react-hmre', 'es2015', 'stage-1', 'react'],
-          plugins: ['transform-decorators-legacy'],
-        },
-      /* query: {
-        "presets": [ "es2015", "stage-0", "react"],
-        "plugins": [ "transform-decorators-legacy", 'react-transform'],
-      // 這裏就是直接貼上原本寫在 .babelrc 內的設定字串
-        "env": {
-          "development": {
-          "presets": ["react-hmre"]
-          }
-        }
-      }*/
       },
       {
         test: /\.css$/,

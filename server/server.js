@@ -1,11 +1,10 @@
-import fs from 'fs';
 import express from 'express';
 import path from 'path';
 
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 
-import { Router, RouterContext, match } from 'react-router';
+import { RouterContext, match } from 'react-router';
 import routes from '../common/routes/routing';
 
 import { applyMiddleware, createStore } from 'redux';
@@ -39,11 +38,13 @@ app.use((req, res, next) => {
 
   // react-router
   match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
-    if (error)
+    if (error) {
       return res.status(500).send(error.message);
+    }
 
-    if (redirectLocation)
+    if (redirectLocation) {
       return res.redirect(302, redirectLocation.pathname + redirectLocation.search);
+    }
 
     if (renderProps == null) {
       // return next('err msg: route not found'); // yield control to next middleware to handle the request
@@ -70,10 +71,10 @@ app.use((req, res, next) => {
 
       // console.log('\ninitView:\n', initView);
 
-      let state = JSON.stringify(store.getState());
+      const state = JSON.stringify(store.getState());
       // console.log( '\nstate: ', state )
 
-      let page = renderFullPage(initView, state);
+      const page = renderFullPage(initView, state);
       // console.log( '\npage:\n', page );
 
       return page;
