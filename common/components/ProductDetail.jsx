@@ -7,52 +7,52 @@ import { fetchNeeds } from '../utils/fetchComponentData';
 
 export default class ProductDetail extends Component {
 
-	static needs = [
-		ShopActions.readOne
-	];
+  static needs = [
+    ShopActions.readOne
+  ];
 
-	constructor(props, context) {
-	    super( props, context );
-	    this.actions = bindActionCreators( ShopActions, props.dispatch );
-	}
+  constructor(props, context) {
+      super( props, context );
+      this.actions = bindActionCreators( ShopActions, props.dispatch );
+  }
 
-	componentDidMount(){
-		// check if product already existed to avoid unnecessary fetching
-		if( !this.props.products ){
-			fetchNeeds( ProductDetail.needs, this.props )
-			return <div>Loading...</div>
-		}
-	}
+  componentDidMount(){
+    // check if product already existed to avoid unnecessary fetching
+    if( !this.props.products ){
+      fetchNeeds( ProductDetail.needs, this.props )
+      return <div>Loading...</div>
+    }
+  }
 
-	render() {
+  render() {
 
-		const { productsById } = this.props.products;
-		const { id:currentProductId } = this.props.params;	// provided by router params
-		const product = productsById.get( currentProductId );
+    const { productsById } = this.props.products;
+    const { id:currentProductId } = this.props.params;  // provided by router params
+    const product = productsById.get( currentProductId );
 
 
-		var styles = {
-			backgroundColor: '#FFDC00'
-		}
+    var styles = {
+      backgroundColor: '#FFDC00'
+    }
 
-		return (
-			<div className="uk-panel uk-panel-box uk-margin-bottom" style={styles}>
-				<h2><Link to='/'>← BACK </Link></h2>
-				<img className="uk-thumbnail uk-thumbnail-mini uk-align-left" src={product.image} />
-				<h4 className="uk-h4">{product.title} - &euro;{product.price}</h4>
-				<p>inventory: {product.inventory}</p>
-				<button className="uk-button uk-button-small uk-button-primary"
-					onClick={this.onAddToCartClicked.bind(this, product)}
-					disabled={product.inventory > 0 ? '' : 'disabled'}>
-					{product.inventory > 0 ? 'Add to cart' : 'Sold Out'}
-				</button>
-			</div>
-		);
-	}
+    return (
+      <div className="uk-panel uk-panel-box uk-margin-bottom" style={styles}>
+        <h2><Link to='/'>← BACK </Link></h2>
+        <img className="uk-thumbnail uk-thumbnail-mini uk-align-left" src={product.image} />
+        <h4 className="uk-h4">{product.title} - &euro;{product.price}</h4>
+        <p>inventory: {product.inventory}</p>
+        <button className="uk-button uk-button-small uk-button-primary"
+          onClick={this.onAddToCartClicked.bind(this, product)}
+          disabled={product.inventory > 0 ? '' : 'disabled'}>
+          {product.inventory > 0 ? 'Add to cart' : 'Sold Out'}
+        </button>
+      </div>
+    );
+  }
 
-	onAddToCartClicked( p, evt ) {
-		this.actions.addToCart( p );
-	}
+  onAddToCartClicked( p, evt ) {
+    this.actions.addToCart( p );
+  }
 }
 
 // refer from using decorator before it became a standarized

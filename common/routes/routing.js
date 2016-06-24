@@ -10,14 +10,14 @@ export default (
 
   <Route component={TodoApp}>
 
-	<Route path="/"
-		   components={{main: ProductsContainer, cart: CartContainer}} />
+  <Route path="/"
+       components={{main: ProductsContainer, cart: CartContainer}} />
 
-	<Route path="/:id"
-		   components={{main: ProductDetail, cart: CartContainer}} />
+  <Route path="/:id"
+       components={{main: ProductDetail, cart: CartContainer}} />
 
-	<Route path="*"
-		   components={{main: NotFound, cart: null}} />
+  <Route path="*"
+       components={{main: NotFound, cart: null}} />
   </Route>
 
 )

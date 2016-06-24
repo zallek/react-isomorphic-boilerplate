@@ -10,30 +10,30 @@ import routes from '../common/routes/routing';
 let state = null;
 if ( window.$REDUX_STATE ) {
 
-	// 解開 server 預先傳來的資料包，稍後會放入 store 成為 initState
-	state = window.$REDUX_STATE;
+  // 解開 server 預先傳來的資料包，稍後會放入 store 成為 initState
+  state = window.$REDUX_STATE;
 
-	// begin marshalling data into Immutable types
-	state.products = new ProductState( {
-		$fetched: document.location.pathname == '/',
-		productsById: convertMapToImmutable( state.products.productsById, ProductRecord ),
-		total: state.products.total,
-	} );
+  // begin marshalling data into Immutable types
+  state.products = new ProductState( {
+    $fetched: document.location.pathname == '/',
+    productsById: convertMapToImmutable( state.products.productsById, ProductRecord ),
+    total: state.products.total,
+  } );
 
-	state.carts = new CartState( {
-		cartsById: Immutable.List.of( ...state.carts.cartsById ),
-	} );
+  state.carts = new CartState( {
+    cartsById: Immutable.List.of( ...state.carts.cartsById ),
+  } );
 
-	// console.log( 'server-rendering state restored: ', state );
+  // console.log( 'server-rendering state restored: ', state );
 }
 
 const store = configureStore( state )
 
 // 注意 <Provider> 是 react-redux 提供的元件，不屬於 react-router
 render(
-	<Provider store={store}>
-		<Router history={browserHistory} routes={routes} />
-	</Provider>,
-	document.querySelector( '.container' )
+  <Provider store={store}>
+    <Router history={browserHistory} routes={routes} />
+  </Provider>,
+  document.querySelector( '.container' )
 );
 

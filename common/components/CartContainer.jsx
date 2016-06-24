@@ -6,29 +6,29 @@ import * as ShopActions from '../actions/ShopActions';
 
 class CartContainer extends Component {
 
-	constructor(props, context){
-		super(props, context);
-		this.actions = bindActionCreators(ShopActions, props.dispatch);
-	}
+  constructor(props, context){
+    super(props, context);
+    this.actions = bindActionCreators(ShopActions, props.dispatch);
+  }
 
-	onCheckoutClicked() {
+  onCheckoutClicked() {
 
-		if ( this.props.carts.cartsById.size == 0 ) {
-			return;
-		}
+    if ( this.props.carts.cartsById.size == 0 ) {
+      return;
+    }
 
-		this.actions.cartCheckout(this.props.carts.cartsById);
-	}
+    this.actions.cartCheckout(this.props.carts.cartsById);
+  }
 
-	render() {
+  render() {
 
-		return (
-			<Cart products= {this.props.products}
-				  carts= {this.props.carts}
-				  onCheckoutClicked= {this.onCheckoutClicked.bind(this)}
-			/>
-		);
-	}
+    return (
+      <Cart products= {this.props.products}
+          carts= {this.props.carts}
+          onCheckoutClicked= {this.onCheckoutClicked.bind(this)}
+      />
+    );
+  }
 
 }
 
